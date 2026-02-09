@@ -3,13 +3,7 @@
 import { SearchIcon } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import {
-    Card,
-    CardContent,
-    CardFooter,
-    CardHeader,
-    CardTitle
-} from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "./ui/card";
 import { useState } from "react";
 import ChangePages from "./change-pages";
 import Link from "next/link";
@@ -19,27 +13,24 @@ import { usePaginationStore } from "@/store/paginationStore";
 import Image from "next/image";
 
 type ItemProps = {
-    id: number,
-    name: string,
-    price: number,
-    image: string
-}
+    id: number;
+    name: string;
+    price: number;
+    image: string;
+};
 
 // Function to filter items based on search query
 const filterItems = (items: ItemProps[], query: string) => {
-    
-    return items.filter((item: ItemProps) =>
-        item.name.toLowerCase().includes(query.toLowerCase())
-    );
+    return items.filter((item: ItemProps) => item.name.toLowerCase().includes(query.toLowerCase()));
 };
 
 export default function StoreItems() {
-    const {toggleCart} = useCartStore()
+    const { toggleCart } = useCartStore();
     const [searchQuery, setSearchQuery] = useState("");
     const [items, setItems] = useState(storeItems);
     // const [currentPage, setCurrentPage] = useState(1);
-    const {currentPage, setCurrentPage} = usePaginationStore()
-    const itemsPerPage = 15
+    const { currentPage, setCurrentPage } = usePaginationStore();
+    const itemsPerPage = 15;
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
@@ -71,19 +62,21 @@ export default function StoreItems() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {currentItems.map((item) => (
-                    <Link key={item.id} href={`/product/${item.id}`} onClick={() => toggleCart(false)}>
+                    <Link
+                        key={item.id}
+                        href={`/product/${item.id}`}
+                        onClick={() => toggleCart(false)}
+                    >
                         <Card className="flex flex-col justify-between">
                             <CardHeader>
-                                <CardTitle className="text-sm truncate">
-                                    {item.name}
-                                </CardTitle>
+                                <CardTitle className="text-sm truncate">{item.name}</CardTitle>
                             </CardHeader>
                             <CardContent className="relative my-2 mx-5 h-40">
                                 <Image
                                     src={item.image}
                                     alt={item.name}
                                     fill
-                                    objectFit="cover"
+                                    style={{ objectFit: "cover" }}
                                     className="border-2 border-slate-400 rounded-md"
                                 />
                             </CardContent>
